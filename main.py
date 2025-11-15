@@ -39,9 +39,7 @@ def validate_args(args):
 
 
 def fetch_pom(repo_url: str, group_id: str, artifact_id: str, version: str) -> str:
-    """
-    Формирует URL POM-файла и скачивает его.
-    """
+
     path = f"{group_id.replace('.', '/')}/{artifact_id}/{version}/{artifact_id}-{version}.pom"
     url = repo_url.rstrip("/") + "/" + path
 
@@ -83,14 +81,12 @@ def main():
 
     args = parser.parse_args()
 
-    # Валидация
     errors = validate_args(args)
     if errors:
         for e in errors:
             print(e, file=sys.stderr)
         sys.exit(1)
 
-    # Разбор пакета
     group_id, artifact_id = args.package.split(":", 1)
 
     print("Загрузка POM-файла...")
